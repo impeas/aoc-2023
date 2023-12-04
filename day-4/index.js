@@ -5,10 +5,10 @@ const file = fs.readFileSync('input_1.txt', 'utf8').split('\n');
 const games = file.map((line) => parseGame(line));
 
 function getTotalPoints() {
-    return file.reduce((acc, value) => {
-        const { points } = parseGame(value);
-        return points > 0 ? acc + Math.pow(2, points - 1) : acc;
-    }, 0);
+    return games.reduce(
+        (acc, { points }) => (points > 0 ? acc + Math.pow(2, points - 1) : acc),
+        0
+    );
 }
 
 function getTotalScratchcards() {
