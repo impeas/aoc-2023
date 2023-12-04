@@ -71,7 +71,7 @@ function read(filePath) {
         if (isGamePossible) possibleGameIds.push(game.id);
     });
 
-    rl.on("close", function () {
+    rl.on("close", function() {
         // part 1 answer
         console.log(possibleGameIds.reduce((a, b) => a + b, 0));
         // part 2 answer

@@ -1,13 +1,22 @@
 const fs = require('fs');
+const { mapToNumArray } = require('../utils');
 
-const file = fs.readFileSync('input.txt', 'utf8').split('\n');
+const file = fs.readFileSync('input_1.txt', 'utf8').split('\n');
+const games = file.map((line) => parseGame(line));
 
-function mapToNumArray(arr) {
-    return arr.split(' ').reduce((acc, val) => {
-        const num = parseInt(val);
-        if (!isNaN(num)) acc.push(num);
-        return acc;
-    }, []);
+function getTotalPoints() {
+    return file.reduce((acc, value) => {
+        const { points } = parseGame(value);
+        return points > 0 ? acc + Math.pow(2, points - 1) : acc;
+    }, 0);
+}
+
+function getTotalScratchcards() {
+    return games.reduce((acc, game) => acc + sumGame(game) + 1, 0);
+}
+
+function sumGame(game) {
+    return game.refs.reduce((acc, ref) => acc + sumGame(games[ref]) + 1, 0);
 }
 
 function parseGame(string) {
@@ -15,24 +24,20 @@ function parseGame(string) {
         /Card\s+(?<gameId>\d+):\s+(?<left>[^|]+)\|\s*(?<right>.+)/.exec(string)
             ?.groups || {};
 
+    const points = mapToNumArray(left).filter((g) =>
+        mapToNumArray(right).includes(g)
+    ).length;
+
+    const id = parseInt(gameId) - 1;
+
     return {
-        gameId,
-        left: mapToNumArray(left),
-        right: mapToNumArray(right)
+        id,
+        points,
+        refs: Array.from({ length: points }).map((_, i) => id + i + 1)
     };
 }
 
-function getTotalPoints() {
-    return file.reduce((acc, value) => {
-        const { left, right } = parseGame(value);
-        const points = left.filter((g) => right.includes(g)).length;
-        return points > 0 ? acc + Math.pow(2, points - 1) : acc;
-    }, 0);
-}
-
-const points = getTotalPoints();
-
 console.log({
-    part1Answer: points
+    part1Answer: getTotalPoints(),
+    part2Answer: getTotalScratchcards()
 });
-// 55866, 78613, 2120, 2054

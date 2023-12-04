@@ -37,7 +37,7 @@ for (let i = 0; i < file.length; i++) {
             }
         }
 
-        if (savedPositions.length > 1) {
+        if (savedPositions.length === 2) {
             if (!gearSum) gearSum = 0;
 
             const gear = savedPositions.reduce((a, b) => b.value * a, 1);
