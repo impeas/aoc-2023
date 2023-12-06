@@ -1,13 +1,8 @@
 const fs = require('fs');
-const { mapToNumArray } = require('../utils');
+const { mapToNumArray, chunkArray } = require('../utils');
 
-const chunkArray = (arr, size) =>
-    arr.length > size
-        ? [arr.slice(0, size), ...chunkArray(arr.slice(size), size)]
-        : [arr];
-
-const file = fs.readFileSync('input.txt', 'utf8').split('\n\n');
-const stringMaps = file.slice(1);
+const input = fs.readFileSync('input.txt', 'utf8').split('\n\n');
+const stringMaps = input.slice(1);
 const nMaps = stringMaps.map((map) => parseMap(map));
 const rMaps = stringMaps
     .map((map) => parseMap(map))
@@ -24,9 +19,9 @@ const parseSeeds = (seedString) => {
     return mapToNumArray(content);
 };
 
-const seeds = parseSeeds(file[0]);
+const seeds = parseSeeds(input[0]);
 
-function parseMap(mapString, reversed) {
+function parseMap(mapString) {
     const splitted = mapString.split('\n');
     const matrix = splitted.slice(1);
     const { from, to } =
@@ -49,8 +44,8 @@ const findSeed = (map, seed) => {
     return seed;
 };
 
-function bruteForceSmallestLocation() {
-    for (let i = 1_000_000_00; i < 1_000_000_000; i++) {
+function bruteForceSmallestLocation(rangeSeeds) {
+    for (let i = 0; i < 1_000_000_000; i++) {
         const seedByLocation = rMaps.reduce(
             (acc, map) => findSeed(map, acc),
             i
@@ -67,9 +62,7 @@ function bruteForceSmallestLocation() {
 const getLocationsForSeeds = () =>
     seeds.map((seed) => nMaps.reduce((acc, map) => findSeed(map, acc), seed));
 
-const rangeSeeds = chunkArray(seeds, 2);
-
 console.log({
-    part1Answer: Math.min(...getLocationsForSeeds()),
-    part2Answer: bruteForceSmallestLocation()
+    part1Answer: Math.min(...getLocationsForSeeds())
+    // part2Answer: bruteForceSmallestLocation(chunkArray(seeds, 2))
 });
