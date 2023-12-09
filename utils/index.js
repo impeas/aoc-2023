@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 function mapToNumArray(arr) {
     return arr.split(' ').reduce((acc, val) => {
         const num = parseInt(val);
@@ -12,7 +14,12 @@ function chunkArray(arr, size) {
         : [arr];
 }
 
+function readFile(path) {
+    return fs.readFileSync(path, 'utf-8');
+}
+
 module.exports = {
     mapToNumArray,
-    chunkArray
+    chunkArray,
+    readFile
 };
