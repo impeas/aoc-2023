@@ -4,7 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "debug": "nodemon --exec \"node --inspect-brk=0.0.0.0:9229 --require ts-node/register day-10/test.ts\""
     },
     "repository": {
         "type": "git",
@@ -16,5 +17,11 @@
     "bugs": {
         "url": "https://github.com/MichalWalczuk/aoc-2023/issues"
     },
-    "homepage": "https://github.com/MichalWalczuk/aoc-2023#readme"
+    "homepage": "https://github.com/MichalWalczuk/aoc-2023#readme",
+    "devDependencies": {
+        "@types/node": "^20.10.4",
+        "ts-node": "^10.9.2",
+        "tslib": "^2.6.2",
+        "typescript": "^5.3.3"
+    }
 }

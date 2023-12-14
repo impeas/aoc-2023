@@ -1,4 +1,10 @@
 const fs = require('fs');
+const path = require('path');
+
+function sleep(t) {
+    const start = Date.now();
+    while (Date.now() - start < t);
+}
 
 function mapToNumArray(arr) {
     return arr.split(' ').reduce((acc, val) => {
@@ -14,12 +20,19 @@ function chunkArray(arr, size) {
         : [arr];
 }
 
-function readFile(path) {
-    return fs.readFileSync(path, 'utf-8');
+function readFile(p) {
+    return fs.readFileSync(path.resolve(p), 'utf-8');
 }
+
+const pipe =
+    (...functions) =>
+    (initialValue) =>
+        functions.reduce((acc, fn) => fn(acc), initialValue);
 
 module.exports = {
     mapToNumArray,
     chunkArray,
-    readFile
+    readFile,
+    sleep,
+    pipe
 };
