@@ -141,6 +141,7 @@ const rows = {};
 
 function traverse(x, y, visited) {
     let nextMove;
+
     let sum = 0;
 
     while (nextMove !== null) {
@@ -290,6 +291,13 @@ function findPipesIndexes(line: string[]) {
     }
 
     return indexes;
+}
+
+for (let i = 0; i < mat.length; i++) {
+    for (let j = 0; j < mat[i].length; j++) {
+        process.stdout.write(`${mat[i][j]}`);
+    }
+    process.stdout.write('\n');
 }
 
 console.log({

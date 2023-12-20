@@ -24,6 +24,35 @@ function readFile(p) {
     return fs.readFileSync(path.resolve(p), 'utf-8');
 }
 
+function printMatrix(matrix) {
+    for (let i = 0; i < matrix.length; i++) {
+        for (let j = 0; j < matrix[i].length; j++) {
+            process.stdout.write(`${matrix[i][j]}`);
+        }
+        process.stdout.write('\n');
+    }
+}
+
+function findAllIndexes(array, cb) {
+    return (array = array.reduce(
+        (a, value, i) => (cb(value) ? a.concat(i) : a),
+        []
+    ));
+}
+
+function rotateMatrix(matrix) {
+    const reversedMatrix = [];
+    const firstRow = matrix[0];
+    for (let i = 0; i < firstRow.length; i++) {
+        const reversedRows = [];
+        for (let j = 0; j < matrix.length; j++) {
+            reversedRows.push(matrix[j][i]);
+        }
+        reversedMatrix.push(reversedRows);
+    }
+    return reversedMatrix;
+}
+
 const pipe =
     (...functions) =>
     (initialValue) =>
@@ -34,5 +63,8 @@ module.exports = {
     chunkArray,
     readFile,
     sleep,
-    pipe
+    pipe,
+    printMatrix,
+    rotateMatrix,
+    findAllIndexes
 };
