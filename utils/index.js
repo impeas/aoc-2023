@@ -40,17 +40,17 @@ function findAllIndexes(array, cb) {
     ));
 }
 
-function rotateMatrix(matrix) {
-    const reversedMatrix = [];
-    const firstRow = matrix[0];
+function zip(arr) {
+    const zippedArr = [];
+    const firstRow = arr[0];
     for (let i = 0; i < firstRow.length; i++) {
         const reversedRows = [];
-        for (let j = 0; j < matrix.length; j++) {
-            reversedRows.push(matrix[j][i]);
+        for (let j = 0; j < arr.length; j++) {
+            reversedRows.push(arr[j][i]);
         }
-        reversedMatrix.push(reversedRows);
+        zippedArr.push(reversedRows);
     }
-    return reversedMatrix;
+    return zippedArr;
 }
 
 const pipe =
@@ -65,6 +65,6 @@ module.exports = {
     sleep,
     pipe,
     printMatrix,
-    rotateMatrix,
+    zip,
     findAllIndexes
 };
