@@ -53,6 +53,21 @@ function zip(arr) {
     return zippedArr;
 }
 
+const rotate = (matrix, opt = { n: 1, clockwise: true }) => {
+    const { n, clockwise } = opt;
+    const new_matrix = [];
+    for (let i = 0; i < matrix[0].length; i++) {
+        new_matrix[i] = [];
+        for (let j = 0; j < matrix.length; j++) {
+            if (!clockwise)
+                new_matrix[i][j] = matrix[j][matrix[0].length - 1 - i];
+            else new_matrix[i][j] = matrix[matrix.length - 1 - j][i];
+        }
+    }
+    if (n > 1) return rotate(new_matrix, { n: n - 1, clockwise });
+    return new_matrix;
+};
+
 const pipe =
     (...functions) =>
     (initialValue) =>
@@ -66,5 +81,6 @@ module.exports = {
     pipe,
     printMatrix,
     zip,
-    findAllIndexes
+    findAllIndexes,
+    rotate
 };

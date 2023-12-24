@@ -1,11 +1,11 @@
-const { readFile, findAllIndexes, rotateMatrix } = require('../utils');
+const { readFile, findAllIndexes, zip } = require('../utils');
 
 const galaxy = readFile('input.txt')
     .split('\n')
     .filter((x) => x)
     .map((x) => x.split(''));
 
-const npos = getCalibratedPositions(galaxy, 1);
+const npos = getCalibratedPositions(galaxy);
 
 const shortest = findShortestDistancesBetweenGalaxies(npos);
 
@@ -52,10 +52,7 @@ function cdist(x1, x2, y1, y2) {
 
 function findRowColIndexes(galaxy) {
     const rowIndexes = findAllIndexes(galaxy, checkSpaceForGalaxy);
-    const colIndexes = findAllIndexes(
-        rotateMatrix(galaxy),
-        checkSpaceForGalaxy
-    );
+    const colIndexes = findAllIndexes(zip(galaxy), checkSpaceForGalaxy);
     return { rowIndexes, colIndexes };
 }
 
